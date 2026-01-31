@@ -1,4 +1,4 @@
-/* Import same variables */
+/* --- Variables --- */
 :root {
   --bg-color: #f3f4f6;
   --text-primary: #111827;
@@ -11,6 +11,9 @@
   --success-text: #065f46;
   --error-bg: #fee2e2;
   --error-text: #991b1b;
+
+  --editor-bg: #f9fafb;
+  --editor-text: #374151;
 }
 
 [data-theme="dark"] {
@@ -25,6 +28,9 @@
   --success-text: #d1fae5;
   --error-bg: #7f1d1d;
   --error-text: #fee2e2;
+
+  --editor-bg: #111827;
+  --editor-text: #e5e7eb;
 }
 
 body {
@@ -42,7 +48,7 @@ body {
   padding: 40px 20px;
 }
 
-/* Header */
+/* --- Header --- */
 header {
   display: flex;
   justify-content: space-between;
@@ -54,6 +60,7 @@ h1 {
   margin: 0;
   font-size: 24px;
   font-weight: 700;
+  letter-spacing: -0.5px;
 }
 .subtitle {
   margin: 5px 0 0;
@@ -63,18 +70,33 @@ h1 {
 
 .header-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
-/* Cards */
+/* --- Cards --- */
 .card {
   background: var(--card-bg);
   border-radius: 12px;
   padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+}
+
+.card-header h3 {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 h3 {
@@ -87,10 +109,10 @@ h3 {
 .desc {
   font-size: 13px;
   color: var(--text-secondary);
-  margin-bottom: 10px;
+  margin: 4px 0 0 0;
 }
 
-/* Grid Form */
+/* --- Grid Form --- */
 .grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -111,8 +133,8 @@ label {
   font-weight: 500;
   color: var(--text-secondary);
 }
-input,
-textarea {
+
+input {
   padding: 10px;
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -121,21 +143,41 @@ textarea {
   font-family: inherit;
   font-size: 14px;
   outline: none;
+  transition: all 0.2s;
 }
 
-input:focus,
-textarea:focus {
+input:focus {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* --- Improved Code Editor --- */
+.code-editor-wrapper {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 textarea {
-  height: 200px;
-  font-family: "Monaco", "Consolas", monospace;
-  font-size: 12px;
+  width: 100%;
+  height: 300px;
+  font-family: "SF Mono", "Menlo", "Consolas", "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 16px;
+  background: var(--editor-bg);
+  color: var(--editor-text);
+  border: none;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
 }
 
-/* Separators */
+textarea:focus {
+  background: var(--bg-color);
+}
+
+/* --- Separators --- */
 .separator {
   margin-top: 10px;
 }
@@ -147,7 +189,16 @@ textarea {
   font-weight: 700;
 }
 
-/* Buttons */
+/* --- Buttons with "Click Feeling" --- */
+button {
+  cursor: pointer;
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
 .primary-btn {
   background-color: var(--accent-color);
   color: white;
@@ -155,21 +206,47 @@ textarea {
   padding: 10px 20px;
   border-radius: 6px;
   font-weight: 600;
-  cursor: pointer;
 }
 .primary-btn:hover {
   background-color: var(--accent-hover);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.secondary-btn:hover {
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.small-btn {
+  padding: 6px 12px;
+  font-size: 12px;
 }
 
 .icon-btn {
   background: none;
   border: none;
-  font-size: 20px;
-  cursor: pointer;
   color: var(--text-secondary);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-btn:hover {
+  background: var(--bg-color);
+  color: var(--text-primary);
 }
 
-/* Toast Message */
+/* --- Toast --- */
 .toast {
   position: fixed;
   bottom: 20px;
@@ -179,6 +256,7 @@ textarea {
   font-weight: 500;
   display: none;
   animation: slideIn 0.3s ease;
+  z-index: 100;
 }
 .toast.success {
   background: var(--success-bg);
@@ -200,4 +278,68 @@ textarea {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.material-symbols-rounded {
+  font-size: 20px;
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* List Items (Education/Work Blocks) */
+.dynamic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list-item {
+  position: relative;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  animation: slideIn 0.3s ease;
+}
+
+/* Remove Button (X) */
+.remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.remove-btn:hover {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+
+/* Add Button styling */
+.plus-icon {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+/* Skills Textarea */
+#skillsInput {
+  height: 100px;
+  font-family: inherit;
+}
+
+/* Helper for empty states */
+.empty-msg {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 20px;
 }

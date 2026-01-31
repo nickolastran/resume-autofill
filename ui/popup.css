@@ -288,3 +288,11 @@ input:checked + .slider:before {
 .app-container > *:nth-child(5) {
   animation-delay: 200ms;
 }
+
+button:active,
+.primary-btn:active,
+.icon-btn:active,
+.secondary-btn:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.1s ease-out;
+}
