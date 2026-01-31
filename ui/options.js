@@ -1,66 +1,56 @@
-const PROFILE_FIELDS = [
-  "firstName",
-  "lastName",
-  "fullName",
-  "email",
-  "phone",
-  "addressLine1",
-  "city",
-  "state",
-  "zip",
-  "country",
-  "linkedin",
-  "github",
-  "portfolio",
-];
-
-// Default Data Structure
-const DEFAULT_DATA = {
-  profile: {},
-  education: [],
-  work: [],
-  skills: [],
-};
+/* ... Keep existing PROFILE_FIELDS and DEFAULT_DATA at the top ... */
 
 document.addEventListener("DOMContentLoaded", () => {
   const saveBtn = document.getElementById("saveBtn");
   const jsonEditor = document.getElementById("jsonEditor");
   const msgDiv = document.getElementById("msg");
+  const themeToggle = document.getElementById("themeToggle");
 
-  // Load Data
-  chrome.storage.sync.get(["resumeData"], (result) => {
+  // Load Data AND Theme
+  chrome.storage.sync.get(["resumeData", "settings"], (result) => {
+    // 1. Data Loading (Existing logic)
     const data = result.resumeData || DEFAULT_DATA;
-
-    // Populate Profile Inputs
     PROFILE_FIELDS.forEach((field) => {
       const el = document.getElementById(field);
       if (el) el.value = data.profile[field] || "";
     });
-
-    // Populate JSON Editor (excluding profile to avoid duplication confusion in UI,
-    // but we merge it back on save)
     const complexData = {
       education: data.education || [],
       work: data.work || [],
       skills: data.skills || [],
     };
     jsonEditor.value = JSON.stringify(complexData, null, 2);
+
+    // 2. Theme Loading (New logic)
+    const settings = result.settings || { theme: "light" };
+    if (settings.theme === "dark") {
+      document.body.setAttribute("data-theme", "dark");
+    }
   });
 
-  // Save Data
+  // Theme Toggle
+  themeToggle.addEventListener("click", () => {
+    const isDark = document.body.getAttribute("data-theme") === "dark";
+    const newTheme = isDark ? "light" : "dark";
+
+    document.body.setAttribute("data-theme", newTheme);
+
+    chrome.storage.sync.get(["settings"], (result) => {
+      const newSettings = { ...result.settings, theme: newTheme };
+      chrome.storage.sync.set({ settings: newSettings });
+    });
+  });
+
+  // Save Data (Existing Logic)
   saveBtn.addEventListener("click", () => {
     try {
-      // 1. Harvest Profile Fields
       const profileData = {};
       PROFILE_FIELDS.forEach((field) => {
         const el = document.getElementById(field);
         if (el) profileData[field] = el.value.trim();
       });
 
-      // 2. Harvest JSON Editor
       const complexData = JSON.parse(jsonEditor.value);
-
-      // 3. Construct Final Object
       const finalData = {
         profile: profileData,
         education: complexData.education,
@@ -68,20 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
         skills: complexData.skills,
       };
 
-      // 4. Save to Storage
       chrome.storage.sync.set({ resumeData: finalData }, () => {
-        showMessage("Data saved successfully!", "success");
+        showMessage("Changes saved successfully", "success");
       });
     } catch (e) {
-      showMessage("Invalid JSON in the editor area.", "error");
+      showMessage("Error: Invalid JSON format", "error");
     }
   });
 
   function showMessage(text, type) {
     msgDiv.innerText = text;
-    msgDiv.className = `message ${type}`;
+    msgDiv.className = `toast ${type}`;
     setTimeout(() => {
-      msgDiv.className = "message";
+      msgDiv.className = "toast";
     }, 3000);
   }
 });

@@ -1,81 +1,203 @@
-body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f0f2f5;
-  padding: 20px;
-  margin: 0;
+/* Import same variables */
+:root {
+  --bg-color: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --card-bg: #ffffff;
+  --border-color: #e5e7eb;
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
+  --success-bg: #d1fae5;
+  --success-text: #065f46;
+  --error-bg: #fee2e2;
+  --error-text: #991b1b;
 }
-.main-layout {
+
+[data-theme="dark"] {
+  --bg-color: #111827;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --card-bg: #1f2937;
+  --border-color: #374151;
+  --accent-color: #3b82f6;
+  --accent-hover: #60a5fa;
+  --success-bg: #064e3b;
+  --success-text: #d1fae5;
+  --error-bg: #7f1d1d;
+  --error-text: #fee2e2;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.layout {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 40px 20px;
 }
+
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  margin-bottom: 30px;
 }
+
 h1 {
   margin: 0;
-  color: #333;
+  font-size: 24px;
+  font-weight: 700;
 }
-.save-btn {
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
+.subtitle {
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
-.save-btn:hover {
-  background: #45a049;
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+.desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+/* Grid Form */
 .grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 20px;
 }
-label {
+
+.field-group {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  gap: 6px;
+}
+.full-width {
+  grid-column: span 2;
+}
+
+label {
+  font-size: 13px;
   font-weight: 500;
-  color: #555;
+  color: var(--text-secondary);
 }
-input {
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+input,
 textarea {
-  width: 100%;
-  height: 300px;
-  font-family: monospace;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
 }
-.message {
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 4px;
-  text-align: center;
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+textarea {
+  height: 200px;
+  font-family: "Monaco", "Consolas", monospace;
+  font-size: 12px;
+}
+
+/* Separators */
+.separator {
+  margin-top: 10px;
+}
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+/* Buttons */
+.primary-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.primary-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+/* Toast Message */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
   display: none;
+  animation: slideIn 0.3s ease;
 }
-.success {
-  background: #e8f5e9;
-  color: #2e7d32;
+.toast.success {
+  background: var(--success-bg);
+  color: var(--success-text);
   display: block;
 }
-.error {
-  background: #ffebee;
-  color: #c62828;
+.toast.error {
+  background: var(--error-bg);
+  color: var(--error-text);
   display: block;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

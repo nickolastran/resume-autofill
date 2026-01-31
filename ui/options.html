@@ -1,47 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Resume Data Settings</title>
-  <link rel="stylesheet" href="options.css">
-</head>
-<body>
-  <div class="main-layout">
-    <header>
-      <h1>Resume Autofill Pro Data</h1>
-      <div class="actions">
-        <button id="saveBtn" class="save-btn">Save Data</button>
-      </div>
-    </header>
-
-    <div class="content">
-      <section>
-        <h3>Personal Profile</h3>
-        <div class="grid-form">
-          <label>First Name <input type="text" id="firstName"></label>
-          <label>Last Name <input type="text" id="lastName"></label>
-          <label>Full Name <input type="text" id="fullName"></label>
-          <label>Email <input type="email" id="email"></label>
-          <label>Phone <input type="text" id="phone"></label>
-          <label>Address 1 <input type="text" id="addressLine1"></label>
-          <label>City <input type="text" id="city"></label>
-          <label>State <input type="text" id="state"></label>
-          <label>Zip <input type="text" id="zip"></label>
-          <label>Country <input type="text" id="country"></label>
-          <label>LinkedIn URL <input type="text" id="linkedin"></label>
-          <label>GitHub URL <input type="text" id="github"></label>
-          <label>Portfolio URL <input type="text" id="portfolio"></label>
+  <head>
+    <title>Resume Data Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <header>
+        <div class="header-content">
+          <h1>Resume Data</h1>
+          <p class="subtitle">Manage your profile for one-click autofill.</p>
         </div>
-      </section>
+        <div class="header-actions">
+          <button id="themeToggle" class="icon-btn">◑</button>
+          <button id="saveBtn" class="primary-btn">Save Changes</button>
+        </div>
+      </header>
 
-      <section>
-        <h3>Raw JSON Data (Education / Work / Skills)</h3>
-        <p>Edit your complex data structures here (must be valid JSON).</p>
-        <textarea id="jsonEditor"></textarea>
-      </section>
+      <div class="container">
+        <div class="card">
+          <h3>Personal Profile</h3>
+          <div class="grid-form">
+            <div class="field-group">
+              <label>First Name</label>
+              <input type="text" id="firstName" placeholder="e.g. Jane" />
+            </div>
+            <div class="field-group">
+              <label>Last Name</label>
+              <input type="text" id="lastName" placeholder="e.g. Doe" />
+            </div>
+            <div class="field-group full-width">
+              <label>Full Name</label>
+              <input type="text" id="fullName" />
+            </div>
+            <div class="field-group">
+              <label>Email</label>
+              <input type="email" id="email" />
+            </div>
+            <div class="field-group">
+              <label>Phone</label>
+              <input type="text" id="phone" />
+            </div>
 
-      <div id="msg" class="message"></div>
+            <div class="field-group full-width separator">
+              <label class="section-label">Address</label>
+            </div>
+
+            <div class="field-group full-width">
+              <label>Address Line 1</label>
+              <input type="text" id="addressLine1" />
+            </div>
+            <div class="field-group">
+              <label>City</label>
+              <input type="text" id="city" />
+            </div>
+            <div class="field-group">
+              <label>State</label>
+              <input type="text" id="state" />
+            </div>
+            <div class="field-group">
+              <label>Zip Code</label>
+              <input type="text" id="zip" />
+            </div>
+            <div class="field-group">
+              <label>Country</label>
+              <input type="text" id="country" />
+            </div>
+
+            <div class="field-group full-width separator">
+              <label class="section-label">Links</label>
+            </div>
+
+            <div class="field-group full-width">
+              <label>LinkedIn URL</label>
+              <input type="text" id="linkedin" />
+            </div>
+            <div class="field-group full-width">
+              <label>GitHub URL</label>
+              <input type="text" id="github" />
+            </div>
+            <div class="field-group full-width">
+              <label>Portfolio URL</label>
+              <input type="text" id="portfolio" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Advanced Data (JSON)</h3>
+          <p class="desc">For education, work history, and skills.</p>
+          <textarea id="jsonEditor"></textarea>
+        </div>
+
+        <div id="msg" class="toast"></div>
+      </div>
     </div>
-  </div>
-  <script src="options.js"></script>
-</body>
+    <script src="options.js"></script>
+  </body>
 </html>
