@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="popup.css" />
@@ -15,39 +15,36 @@
     <div class="app-container">
       <header>
         <div class="brand">
-          <div class="logo-circle">R</div>
+          <div class="logo-box">R</div>
           <h1>Autofill</h1>
         </div>
-        <button id="themeToggle" class="icon-btn" title="Toggle Dark Mode">
-          <span class="icon">◑</span>
+        <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
+            />
+          </svg>
         </button>
       </header>
 
-      <div class="status-card">
-        <div class="status-indicator">
-          <div id="statusDot" class="dot ready"></div>
-          <span id="statusMsg">Extension Ready</span>
-        </div>
+      <div class="status-card" id="statusCard">
+        <div id="statusDot" class="status-dot"></div>
+        <span id="statusMsg" class="status-text">Checking status...</span>
       </div>
 
-      <main>
-        <button id="btnFill" class="primary-btn">
-          <span></span>Fill This Page</span>
-        </button>
+      <button id="btnFill" class="primary-btn">Fill This Page</button>
 
-        <div class="toggle-row">
-          <span class="label">Autofill Active</span>
-          <label class="switch">
-            <input type="checkbox" id="toggleAutofill" />
-            <span class="slider round"></span>
-          </label>
-        </div>
-      </main>
+      <div class="toggle-row">
+        <span class="label-text">Autofill Active</span>
+        <label class="switch">
+          <input type="checkbox" id="toggleAutofill" />
+          <span class="slider"></span>
+        </label>
+      </div>
 
-      <footer>
-        <button id="btnOptions" class="secondary-btn">Edit Resume Data</button>
-      </footer>
+      <button id="btnOptions" class="secondary-btn">Edit Resume Data</button>
     </div>
+
     <script src="popup.js"></script>
   </body>
 </html>

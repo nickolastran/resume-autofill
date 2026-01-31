@@ -6,74 +6,95 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusDot = document.getElementById("statusDot");
   const themeToggle = document.getElementById("themeToggle");
 
-  // Load Settings & Theme
+  // --- Helper: Update Status UI ---
+  function updateStatusUI(isEnabled) {
+    if (isEnabled) {
+      statusMsg.innerText = "Autofill Ready";
+      statusDot.className = "status-dot active";
+    } else {
+      statusMsg.innerText = "Autofill Paused";
+      statusDot.className = "status-dot paused";
+    }
+  }
+
+  // --- 1. Load Initial State ---
   chrome.storage.sync.get(["settings"], (result) => {
     const settings = result.settings || {
       autofillEnabled: true,
       theme: "light",
     };
 
-    // Set Autofill Toggle
-    toggleAutofill.checked = settings.autofillEnabled;
-
-    // Set Theme
+    // Set Theme (Instant)
     if (settings.theme === "dark") {
       document.body.setAttribute("data-theme", "dark");
     }
+
+    // Set Toggles
+    toggleAutofill.checked = settings.autofillEnabled;
+    updateStatusUI(settings.autofillEnabled);
   });
 
-  // Theme Toggle Handler
+  // --- 2. Theme Toggle (Instant) ---
   themeToggle.addEventListener("click", () => {
     const isDark = document.body.getAttribute("data-theme") === "dark";
     const newTheme = isDark ? "light" : "dark";
 
-    // Apply immediately
+    // Apply DOM change immediately
     document.body.setAttribute("data-theme", newTheme);
 
-    // Save
+    // Save to storage in background
     chrome.storage.sync.get(["settings"], (result) => {
       const newSettings = { ...result.settings, theme: newTheme };
       chrome.storage.sync.set({ settings: newSettings });
     });
   });
 
-  // Autofill Toggle Handler
+  // --- 3. Autofill Toggle ---
   toggleAutofill.addEventListener("change", (e) => {
-    chrome.storage.sync.get(["settings"], (result) => {
-      const newSettings = {
-        ...result.settings,
-        autofillEnabled: e.target.checked,
-      };
-      chrome.storage.sync.set({ settings: newSettings });
+    const isEnabled = e.target.checked;
+    updateStatusUI(isEnabled);
 
-      statusMsg.innerText = e.target.checked
-        ? "Extension Ready"
-        : "Autofill Paused";
-      statusDot.className = e.target.checked ? "dot ready" : "dot";
+    chrome.storage.sync.get(["settings"], (result) => {
+      const newSettings = { ...result.settings, autofillEnabled: isEnabled };
+      chrome.storage.sync.set({ settings: newSettings });
     });
   });
 
-  // Fill Page Handler
+  // --- 4. Fill Button Logic ---
   btnFill.addEventListener("click", () => {
+    // Add a temporary "Pressed" state
+    btnFill.innerText = "Filling...";
+
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (!tabs[0]?.id) return;
+
       chrome.tabs.sendMessage(
         tabs[0].id,
         { action: "FILL_NOW" },
         (response) => {
+          // Handle success or failure
           if (chrome.runtime.lastError) {
             statusMsg.innerText = "Refresh Page First";
-            statusDot.className = "dot error";
+            statusDot.className = "status-dot error";
+            btnFill.innerText = "Fill This Page";
           } else {
-            statusMsg.innerText = "Fill Command Sent!";
-            statusDot.className = "dot ready";
-            setTimeout(() => (statusMsg.innerText = "Extension Ready"), 2000);
+            statusMsg.innerText = "Success!";
+            statusDot.className = "status-dot active";
+            btnFill.innerText = "Filled!";
+
+            // Reset button text after 2 seconds
+            setTimeout(() => {
+              btnFill.innerText = "Fill This Page";
+              // Revert status message based on toggle
+              updateStatusUI(toggleAutofill.checked);
+            }, 2000);
           }
         },
       );
     });
   });
 
-  // Options Page
+  // --- 5. Options Page ---
   btnOptions.addEventListener("click", () => {
     if (chrome.runtime.openOptionsPage) {
       chrome.runtime.openOptionsPage();
