@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Data Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="main-layout">
+    <header>
+      <h1>Resume Autofill Pro Data</h1>
+      <div class="actions">
+        <button id="saveBtn" class="save-btn">Save Data</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <section>
+        <h3>Personal Profile</h3>
+        <div class="grid-form">
+          <label>First Name <input type="text" id="firstName"></label>
+          <label>Last Name <input type="text" id="lastName"></label>
+          <label>Full Name <input type="text" id="fullName"></label>
+          <label>Email <input type="email" id="email"></label>
+          <label>Phone <input type="text" id="phone"></label>
+          <label>Address 1 <input type="text" id="addressLine1"></label>
+          <label>City <input type="text" id="city"></label>
+          <label>State <input type="text" id="state"></label>
+          <label>Zip <input type="text" id="zip"></label>
+          <label>Country <input type="text" id="country"></label>
+          <label>LinkedIn URL <input type="text" id="linkedin"></label>
+          <label>GitHub URL <input type="text" id="github"></label>
+          <label>Portfolio URL <input type="text" id="portfolio"></label>
+        </div>
+      </section>
+
+      <section>
+        <h3>Raw JSON Data (Education / Work / Skills)</h3>
+        <p>Edit your complex data structures here (must be valid JSON).</p>
+        <textarea id="jsonEditor"></textarea>
+      </section>
+
+      <div id="msg" class="message"></div>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

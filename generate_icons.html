@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <body>
+    <h2>Generating Icons... check your downloads folder.</h2>
+    <script>
+      function createIcon(size, text) {
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+
+        // Background: Blue Gradient
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, "#2196F3");
+        gradient.addColorStop(1, "#1976D2");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+
+        // Text: White "R"
+        ctx.fillStyle = "white";
+        ctx.font = `bold ${size * 0.6}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, size / 2, size / 2);
+
+        // Convert to PNG and Download
+        const link = document.createElement("a");
+        link.download = `icon${size}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      }
+
+      // Generate the 3 required sizes
+      setTimeout(() => createIcon(16, "R"), 100);
+      setTimeout(() => createIcon(48, "R"), 300);
+      setTimeout(() => createIcon(128, "R"), 500);
+    </script>
+  </body>
+</html>

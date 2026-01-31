@@ -1,0 +1,81 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f2f5;
+  padding: 20px;
+  margin: 0;
+}
+.main-layout {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+h1 {
+  margin: 0;
+  color: #333;
+}
+.save-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.save-btn:hover {
+  background: #45a049;
+}
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+textarea {
+  width: 100%;
+  height: 300px;
+  font-family: monospace;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  display: none;
+}
+.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  display: block;
+}
+.error {
+  background: #ffebee;
+  color: #c62828;
+  display: block;
+}
