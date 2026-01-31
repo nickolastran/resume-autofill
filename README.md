@@ -1,4 +1,4 @@
-# Resume Autofill Pro
+# Resume Autofiller
 
 A secure, zero-dependency Chrome Extension to autofill job applications with your resume data.
 
@@ -15,7 +15,7 @@ A secure, zero-dependency Chrome Extension to autofill job applications with you
 2. Open Chrome and navigate to `chrome://extensions`.
 3. Enable **Developer Mode** (top right).
 4. Click **Load unpacked**.
-5. Select the `resume-autofill-extension` folder.
+5. Select the `resume-autofill` folder.
 
 ## How to Use
 
